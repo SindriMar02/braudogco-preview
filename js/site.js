@@ -11,7 +11,7 @@ const wide = () => matchMedia('(min-width: 960px)').matches;
 
 const TXT = {
   is: {
-    openUntil: (t) => `Opið til ${t}`, opensAt: (d, t) => `Lokað · opnar ${d} kl.\u00a0${t}`, today: 'í dag', tomorrow: 'á morgun',
+    openUntil: (t) => `Opið til ${t}`, opensAt: (d, t) => `Lokað · opnar ${d} kl.\u00a0${t}`, today: 'í\u00a0dag', tomorrow: 'á\u00a0morgun',
     days: ['sunnudag', 'mánudag', 'þriðjudag', 'miðvikudag', 'fimmtudag', 'föstudag', 'laugardag'],
     count: (n) => (n === 1 ? '1 bakarí opið núna' : `${n} bakarí opin núna`),
     firstOpens: (name, d, t) => `Lokað núna · ${name} opnar ${d}\u00a0kl.\u00a0${t}`,
