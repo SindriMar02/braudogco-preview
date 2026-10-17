@@ -389,6 +389,8 @@ main { padding-top: var(--bc-bar); }
 .bc-field__err { color: #8A2B1E; font-size: 1rem; }
 .bc-form__ok { color: var(--bc-slate-deep); font-weight: 700; }
 .bc-form .bc-btn { justify-self: start; }
+.bc-field input[type="date"] { text-align: left; -webkit-appearance: none; appearance: none; }
+.bc-field input[type="date"]::-webkit-date-and-time-value { text-align: left; }
 @media (max-width: 640px) { .bc-form { grid-template-columns: 1fr; } }
 
 /* intro: badge drop (once per session) */
