@@ -352,6 +352,9 @@ function initFocus() {
 function initMenu() {
   const root = $('[data-menu]');
   if (!root) return;
+  const wrap = $('[data-filter-wrap]', root);
+  // phones: filter folded so products show first; open when a filter is active (from the URL) or on desktop
+  if (wrap && !wide()) wrap.open = !!new URLSearchParams(location.search).get('an');
   const boxes = $$('[data-allergen]', root), count = $('[data-count]', root), items = $$('.bc-item', root);
   const apply = () => {
     const out = boxes.filter((b) => b.checked).map((b) => b.value);
