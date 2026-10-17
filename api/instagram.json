@@ -1,0 +1,13 @@
+{
+  "_prototype": "Same shape as the Instagram API with Instagram Login /me/media response the production Worker caches. These 8 entries are SAMPLE tiles built from Brauð & Co's own website photos (sample: true), linking to their profile, until their account is connected. No captions are invented.",
+  "data": [
+    { "id": "s1", "sample": true, "media_type": "IMAGE", "media_url": "/assets/img/pistasiu-640.webp", "permalink": "https://www.instagram.com/braudogco/", "caption": null },
+    { "id": "s2", "sample": true, "media_type": "IMAGE", "media_url": "/assets/img/bakstur-640.webp", "permalink": "https://www.instagram.com/braudogco/", "caption": null },
+    { "id": "s3", "sample": true, "media_type": "IMAGE", "media_url": "/assets/img/frakkastigur-640.webp", "permalink": "https://www.instagram.com/braudogco/", "caption": null },
+    { "id": "s4", "sample": true, "media_type": "IMAGE", "media_url": "/assets/img/snudar-box-640.webp", "permalink": "https://www.instagram.com/braudogco/", "caption": null },
+    { "id": "s5", "sample": true, "media_type": "IMAGE", "media_url": "/assets/img/hendur-640.webp", "permalink": "https://www.instagram.com/braudogco/", "caption": null },
+    { "id": "s6", "sample": true, "media_type": "IMAGE", "media_url": "/assets/img/vinarbraud-bakki-640.webp", "permalink": "https://www.instagram.com/braudogco/", "caption": null },
+    { "id": "s7", "sample": true, "media_type": "IMAGE", "media_url": "/assets/img/hillur-640.webp", "permalink": "https://www.instagram.com/braudogco/", "caption": null },
+    { "id": "s8", "sample": true, "media_type": "IMAGE", "media_url": "/assets/img/rekki-640.webp", "permalink": "https://www.instagram.com/braudogco/", "caption": null }
+  ]
+}
