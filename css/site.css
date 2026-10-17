@@ -131,6 +131,15 @@ main { padding-top: var(--bc-bar); }
   .bc-panel { overscroll-behavior: contain; overflow-y: auto; position: fixed; inset: var(--bc-bar) 0 0 0; z-index: 48; background: var(--bc-sand); display: flex; flex-direction: column; justify-content: space-between; padding: 2rem 4vw calc(1.5rem + env(safe-area-inset-bottom)); }
   .bc-panel nav { display: flex; flex-direction: column; }
   .bc-panel nav a { font-size: clamp(3rem, 15vw, 5rem); line-height: 1; font-weight: 760; text-transform: uppercase; text-decoration: none; color: var(--bc-slate); padding: .35rem 0; }
+  /* open/close: the panel wipes down from under the bar, links rise out of their masks (stagger 45ms),
+     the foot follows. Closing is faster and runs on the same transitions, so it can be interrupted. */
+  .bc-panel { clip-path: inset(0 0 100% 0); transition: clip-path .3s cubic-bezier(.4, 0, .2, 1); }
+  .bc-panel.is-open { clip-path: inset(0 0 0 0); transition: clip-path .55s var(--bc-ease); }
+  .bc-panel nav a { display: block; overflow: hidden; padding: 0; margin: .1rem 0; }
+  .bc-panel nav a span { display: block; padding: .3rem 0 .15rem; transform: translate3d(0, 105%, 0); transition: transform .25s cubic-bezier(.4, 0, .2, 1); }
+  .bc-panel.is-open nav a span { transform: none; transition: transform .75s var(--bc-ease) calc(.08s + var(--n) * .045s); }
+  .bc-panel__foot { opacity: 0; transform: translate3d(0, 12px, 0); transition: opacity .2s, transform .25s cubic-bezier(.4, 0, .2, 1); }
+  .bc-panel.is-open .bc-panel__foot { opacity: 1; transform: none; transition: opacity .5s .3s, transform .7s var(--bc-ease) .3s; }
   .bc-panel nav a[aria-current] { color: var(--bc-ink); }
   .bc-panel__foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
   .bc-panel__lang { font-weight: 700; font-size: 1.25rem; color: var(--bc-slate-deep); min-height: 44px; display: inline-flex; align-items: center; }
@@ -301,19 +310,24 @@ main { padding-top: var(--bc-bar); }
 /* FOOTER (slate, reference footer order: hashtag first) */
 .bc-foot { position: relative; z-index: 2; background: var(--bc-slate); color: var(--bc-paper); padding: var(--bc-sec) var(--bc-pad) calc(2.5rem + env(safe-area-inset-bottom)); }
 .bc-foot__tag { text-align: center; text-transform: uppercase; font-weight: 760; margin-bottom: var(--bc-sec); }
-.bc-foot__grid { display: grid; grid-template-columns: 1fr 1.2fr 1fr 1fr; gap: 2rem var(--bc-gutter); align-items: start; }
-.bc-foot__logo { width: 150px; }
-.bc-foot__h { font-size: 1.125rem; font-weight: 700; text-transform: uppercase; color: var(--bc-paper); margin: 0 0 .5rem; }
-.bc-foot__h:not(:first-child) { margin-top: 1.5rem; }
-.bc-foot__list li { display: flex; justify-content: space-between; max-width: 18rem; padding: .1rem 0; }
-.bc-foot__list span { font-variant-numeric: tabular-nums; }
+/* footer: one centre axis like the reference footer. Title, badge, three centred columns, legal strip. */
+.bc-foot__logo { width: clamp(128px, 12vw, 168px); margin: 0 auto clamp(3rem, 6vw, 5rem); }
+.bc-foot__logo svg { display: block; width: 100%; height: auto; }
+.bc-foot__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem var(--bc-gutter); max-width: 1100px; margin: 0 auto; text-align: center; align-items: start; }
+.bc-foot__col { display: grid; justify-items: center; align-content: start; gap: .5rem; }
+.bc-foot__col p { max-width: 30ch; margin: 0 0 .5rem; }
+.bc-foot__h { font-size: 1.125rem; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; color: var(--bc-paper); margin: 0 0 .5rem; }
+.bc-foot__h:not(:first-child) { margin-top: 1.25rem; }
+.bc-foot__list { display: grid; grid-template-columns: auto auto; justify-content: center; column-gap: 1.5rem; row-gap: .25rem; text-align: left; }
+.bc-foot__list li { display: contents; }
+.bc-foot__list span { text-align: right; font-weight: 400; font-variant-numeric: tabular-nums; }
 .bc-foot a { text-decoration: none; }
-.bc-foot a:hover { text-decoration: underline; }
-.bc-foot .bc-link { color: var(--bc-paper); display: inline-block; margin-top: .75rem; }
-.bc-foot__legal { display: grid; gap: 1rem; justify-items: start; font-size: 1rem; }
+.bc-foot a:not(.bc-btn):hover { text-decoration: underline; text-underline-offset: .2em; }
+.bc-foot .bc-link { color: var(--bc-paper); display: inline-block; margin-top: .5rem; font-weight: 700; text-decoration: underline; text-underline-offset: .2em; }
+.bc-foot__legal { display: grid; justify-items: center; gap: .75rem; max-width: 1100px; margin: clamp(3rem, 6vw, 5rem) auto 0; padding-top: 2rem; border-top: 1px solid rgba(243, 238, 220, .35); text-align: center; font-size: 1rem; }
+.bc-foot__legal p { margin: 0; }
 .bc-foot__credit { color: var(--bc-paper); }
-@media (max-width: 959.8px) { .bc-foot__grid { grid-template-columns: 1fr 1fr; } .bc-foot__logo { grid-column: 1 / -1; } }
-@media (max-width: 520px) { .bc-foot__grid { grid-template-columns: 1fr; } }
+@media (max-width: 959.8px) { .bc-foot__grid { grid-template-columns: 1fr; gap: 2.75rem; } }
 
 /* ---------- SUB PAGES ---------- */
 .bc-phead { padding: clamp(3rem, 7vw, 7rem) var(--bc-pad) 2rem; display: grid; gap: 1.5rem; justify-items: start; }
@@ -397,8 +411,23 @@ main { padding-top: var(--bc-bar); }
 .bc-intro { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; background: var(--bc-sand); clip-path: inset(0 0 0 0); }
 .bc-intro svg { width: min(46vw, 340px); height: auto; }
 
+
+/* ---------- page transitions (cross-document View Transitions; Chrome 126+, Safari 18.2+; others load normally) ----------
+   The bar is its own group so it stays put; the next page wipes up over the old one, which drifts up and dims. */
+@view-transition { navigation: auto; }
+.bc-bar { view-transition-name: bc-bar; }
+::view-transition-group(bc-bar) { animation: none; }
+::view-transition-old(root) { animation: bc-vt-out .6s var(--bc-ease) both; }
+::view-transition-new(root) { animation: bc-vt-in .7s var(--bc-ease) both; }
+@keyframes bc-vt-out { to { transform: translate3d(0, -6%, 0); opacity: .35; } }
+@keyframes bc-vt-in { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+
 /* ---------- reduced motion: plain render ---------- */
 @media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  .bc-panel, .bc-panel nav a span, .bc-panel__foot { transition: none !important; }
+  .bc-panel { clip-path: none; }
+  .bc-panel nav a span, .bc-panel__foot { transform: none; opacity: 1; }
   .js .bc-st .bc-c, .bc-card, .bc-sticky__media img, .bc-row__name { transform: none !important; transition: none !important; }
   .bc-card--left { transform: rotate(-8deg) translate3d(-90%, 0, 0) !important; }
   .bc-card--right { transform: rotate(8deg) translate3d(90%, 0, 0) !important; }

@@ -252,18 +252,27 @@ async function initInstagram() {
 function initHeader() {
   const burger = $('[data-burger]'), panel = $('[data-panel]');
   const background = $$('main, .bc-foot, .bc-skip');
-  let y = 0;
+  let y = 0, hideTimer = 0;
   const lock = (on) => {
     const b = document.body;
     if (on) { y = scrollY; b.style.position = 'fixed'; b.style.top = `-${y}px`; b.style.left = '0'; b.style.right = '0'; lenis?.stop(); }
     else { b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; scrollTo(0, y); lenis?.start(); }
   };
-  const set = (open, restore = true) => {
+  const set = (open, restore = true, instant = false) => {
     if (!burger) return;
     if (!open && burger.getAttribute('aria-expanded') !== 'true') return;
     burger.setAttribute('aria-expanded', String(open));
     $('.bc-sr', burger).textContent = open ? TXT.menuClose : TXT.menuOpen;
-    panel.hidden = !open;
+    clearTimeout(hideTimer);
+    if (open) {
+      panel.hidden = false;
+      panel.getBoundingClientRect(); // commit the closed state so the open transition runs
+      panel.classList.add('is-open');
+    } else {
+      panel.classList.remove('is-open');
+      if (instant || reduce) panel.hidden = true;
+      else hideTimer = setTimeout(() => { if (!panel.classList.contains('is-open')) panel.hidden = true; }, 340);
+    }
     background.forEach(el => { el.inert = open; });
     if (open) lock(true);
     else if (restore) lock(false);
@@ -281,8 +290,16 @@ function initHeader() {
       links[(i + (e.shiftKey ? links.length - 1 : 1)) % links.length].focus({ preventScroll: true });
     }
   });
-  matchMedia('(min-width: 960px)').addEventListener('change', e => { if (e.matches) set(false); });
-  $$('a', panel || document.createElement('div')).forEach((a) => a.addEventListener('click', () => set(false, false)));
+  matchMedia('(min-width: 960px)').addEventListener('change', e => { if (e.matches) set(false, true, true); });
+  // a link to another page keeps the menu up: the page transition wipes the next page over it.
+  // Same-page links (and browsers without view transitions) close it right away.
+  const crossDocVT = 'onpagereveal' in window && !reduce;
+  $$('a', panel || document.createElement('div')).forEach((a) => a.addEventListener('click', () => {
+    const u = new URL(a.href, location.href);
+    const leaves = u.origin === location.origin && u.pathname !== location.pathname;
+    if (!(leaves && crossDocVT)) set(false, false);
+  }));
+  addEventListener('pageshow', (e) => { if (e.persisted && burger?.getAttribute('aria-expanded') === 'true') { panel.classList.remove('is-open'); panel.hidden = true; set(false); } });
   $$('[data-logo], .bc-panel [data-home]').forEach((a) => a.addEventListener('click', (e) => {
     const target = new URL(a.href, location.href);
     if (target.pathname !== location.pathname) return;
