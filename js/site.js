@@ -11,19 +11,19 @@ const wide = () => matchMedia('(min-width: 960px)').matches;
 
 const TXT = {
   is: {
-    openUntil: (t) => `Opið til ${t}`, opensAt: (d, t) => `Lokað · opnar ${d} kl. ${t}`, today: 'í dag', tomorrow: 'á morgun',
+    openUntil: (t) => `Opið til ${t}`, opensAt: (d, t) => `Lokað · opnar ${d} kl.\u00a0${t}`, today: 'í dag', tomorrow: 'á morgun',
     days: ['sunnudag', 'mánudag', 'þriðjudag', 'miðvikudag', 'fimmtudag', 'föstudag', 'laugardag'],
     count: (n) => (n === 1 ? '1 bakarí opið núna' : `${n} bakarí opin núna`),
-    firstOpens: (name, d, t) => `Lokað núna · ${name} opnar ${d} kl. ${t}`,
+    firstOpens: (name, d, t) => `Lokað núna · ${name} opnar ${d}\u00a0kl.\u00a0${t}`,
     nearBusy: 'Finn staðsetningu…', nearFail: 'Fann ekki staðsetningu. Listinn er óbreyttur.', nearDone: 'Raðað eftir fjarlægð frá þér.',
     km: 'km', items: (n) => `${n} vörur`, weekly: 'Snúður vikunnar', ig: 'Instagram-færsla frá Brauð & Co', menuOpen: 'Opna valmynd', menuClose: 'Loka valmynd',
     mailSubject: 'Fyrirspurn um veislu', mailFields: ['Nafn', 'Netfang', 'Dagsetning', 'Fjöldi gesta', 'Sótt í', 'Óskir'],
   },
   en: {
-    openUntil: (t) => `Open until ${t}`, opensAt: (d, t) => `Closed · opens ${d} at ${t}`, today: 'today', tomorrow: 'tomorrow',
+    openUntil: (t) => `Open until ${t}`, opensAt: (d, t) => `Closed · opens ${d} at\u00a0${t}`, today: 'today', tomorrow: 'tomorrow',
     days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     count: (n) => (n === 1 ? '1 bakery open now' : `${n} bakeries open now`),
-    firstOpens: (name, d, t) => `Closed now · ${name} opens ${d} at ${t}`,
+    firstOpens: (name, d, t) => `Closed now · ${name} opens ${d}\u00a0at\u00a0${t}`,
     nearBusy: 'Finding you…', nearFail: 'Could not get your location. The list is unchanged.', nearDone: 'Sorted by distance from you.',
     km: 'km', items: (n) => `${n} items`, weekly: 'Snúður of the week', ig: 'Instagram post by Brauð & Co', menuOpen: 'Open menu', menuClose: 'Close menu',
     mailSubject: 'Catering enquiry', mailFields: ['Name', 'Email', 'Date', 'Guests', 'Pickup', 'Wishes'],
